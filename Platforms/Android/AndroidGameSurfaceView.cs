@@ -1,43 +1,35 @@
 using Android.Content;
-using Android.Graphics;
 using Android.Views;
 
 namespace MyMAUI.Platforms.Android;
 
-public sealed class AndroidGameSurfaceView :
-    SurfaceView,
-    ISurfaceHolderCallback
+public class AndroidGameSurfaceView : SurfaceView
 {
-    public event Action<string>? StatusChanged;
-
     public AndroidGameSurfaceView(Context context)
         : base(context)
     {
-        Holder.AddCallback(this);
-
+        SetBackgroundColor(Android.Graphics.Color.Black);
         Focusable = true;
         FocusableInTouchMode = true;
     }
 
-    public void SurfaceCreated(ISurfaceHolder holder)
+    public override bool OnTouchEvent(MotionEvent? e)
     {
-        StatusChanged?.Invoke(
-            VulkanBootstrap.Initialize()
-        );
-    }
+        if (e == null)
+            return false;
 
-    public void SurfaceChanged(
-        ISurfaceHolder holder,
-        Format format,
-        int width,
-        int height)
-    {
-        // Vulkan swapchain resizing will be handled
-        // by our rendering system.
-    }
+        switch (e.Action)
+        {
+            case MotionEventActions.Down:
+                return true;
 
-    public void SurfaceDestroyed(ISurfaceHolder holder)
-    {
-        StatusChanged?.Invoke("ANDROID SURFACE PAUSED");
+            case MotionEventActions.Move:
+                return true;
+
+            case MotionEventActions.Up:
+                return true;
+        }
+
+        return base.OnTouchEvent(e);
     }
 }
