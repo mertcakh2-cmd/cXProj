@@ -5,31 +5,29 @@ namespace MyMAUI.Platforms.Android;
 
 public class AndroidGameSurfaceView : SurfaceView
 {
-    public AndroidGameSurfaceView(Context context)
-        : base(context)
+public AndroidGameSurfaceView(Context context)
+: base(context)
+{
+SetBackgroundColor(global::Android.Graphics.Color.Black);
+
+    Focusable = true;
+    FocusableInTouchMode = true;
+}
+
+public override bool OnTouchEvent(MotionEvent? e)
+{
+    if (e == null)
+        return false;
+
+    switch (e.Action)
     {
-        SetBackgroundColor(Android.Graphics.Color.Black);
-        Focusable = true;
-        FocusableInTouchMode = true;
+        case MotionEventActions.Down:
+        case MotionEventActions.Move:
+        case MotionEventActions.Up:
+            return true;
     }
 
-    public override bool OnTouchEvent(MotionEvent? e)
-    {
-        if (e == null)
-            return false;
+    return base.OnTouchEvent(e);
+}
 
-        switch (e.Action)
-        {
-            case MotionEventActions.Down:
-                return true;
-
-            case MotionEventActions.Move:
-                return true;
-
-            case MotionEventActions.Up:
-                return true;
-        }
-
-        return base.OnTouchEvent(e);
-    }
 }
