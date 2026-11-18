@@ -1,33 +1,384 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+
 <ContentPage
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:engine="clr-namespace:MyMAUI.Engine.Views"
     x:Class="MyMAUI.MainPage"
-    BackgroundColor="#101114">
+    BackgroundColor="#08090C"
+    NavigationPage.HasNavigationBar="False">
 
-    <VerticalStackLayout
-        Padding="30"
-        Spacing="20"
-        VerticalOptions="Center">
+    <Grid>
 
-        <Label
-            Text="MY MAUI"
-            FontSize="36"
-            FontAttributes="Bold"
-            TextColor="White"
-            HorizontalOptions="Center"/>
+        <!-- WELCOME SCREEN -->
 
-        <Label
-            Text="Your first C# Android application"
-            TextColor="#AAAAAA"
-            HorizontalOptions="Center"/>
+        <Grid
+            x:Name="WelcomePanel"
+            IsVisible="True"
+            Padding="28"
+            BackgroundColor="#08090C">
 
-        <Button
-            Text="Hello Android"
-            BackgroundColor="#6750A4"
-            TextColor="White"
-            CornerRadius="16"
-            Clicked="OnButtonClicked"/>
+            <ScrollView>
 
-    </VerticalStackLayout>
+                <VerticalStackLayout
+                    Spacing="17"
+                    VerticalOptions="Center">
+
+                    <Label
+                        Text="BLOOD ENGINE"
+                        TextColor="#B51F2B"
+                        FontSize="14"
+                        CharacterSpacing="5"
+                        FontAttributes="Bold"
+                        HorizontalOptions="Center"/>
+
+                    <Label
+                        Text="ULTRAKILL"
+                        TextColor="White"
+                        FontSize="52"
+                        FontAttributes="Bold"
+                        HorizontalOptions="Center"/>
+
+                    <Label
+                        Text="MOBILE BETA"
+                        TextColor="#B51F2B"
+                        FontSize="15"
+                        CharacterSpacing="7"
+                        HorizontalOptions="Center"/>
+
+                    <BoxView
+                        HeightRequest="2"
+                        Color="#84202A"
+                        Margin="20,10"/>
+
+                    <Label
+                        Text="SELECT YOUR DESTINATION"
+                        TextColor="#BBBBBB"
+                        FontSize="13"
+                        CharacterSpacing="2"
+                        HorizontalOptions="Center"/>
+
+                    <Button
+                        Text="0-1  SACRED KNIGHT"
+                        CommandParameter="0-1"
+                        Clicked="OnSelectLevel"
+                        BackgroundColor="#85212D"
+                        TextColor="White"
+                        CornerRadius="10"/>
+
+                    <Button
+                        Text="0-2  BLOODYHELL"
+                        CommandParameter="0-2"
+                        Clicked="OnSelectLevel"
+                        BackgroundColor="#25171B"
+                        TextColor="White"
+                        CornerRadius="10"/>
+
+                    <Button
+                        Text="0-3  ESCAPE"
+                        CommandParameter="0-3"
+                        Clicked="OnSelectLevel"
+                        BackgroundColor="#25171B"
+                        TextColor="White"
+                        CornerRadius="10"/>
+
+                    <Button
+                        Text="0-4  PATHGRINDER"
+                        CommandParameter="0-4"
+                        Clicked="OnSelectLevel"
+                        BackgroundColor="#25171B"
+                        TextColor="White"
+                        CornerRadius="10"/>
+
+                    <Button
+                        Text="1-1  MY OWN MY KIND"
+                        CommandParameter="1-1"
+                        Clicked="OnSelectLevel"
+                        BackgroundColor="#25171B"
+                        TextColor="White"
+                        CornerRadius="10"/>
+
+                    <Label
+                        Text="CUSTOM C# ENGINE  |  VULKAN"
+                        TextColor="#686868"
+                        FontSize="11"
+                        HorizontalOptions="Center"/>
+
+                </VerticalStackLayout>
+
+            </ScrollView>
+
+        </Grid>
+
+
+        <!-- GAME SCREEN -->
+
+        <Grid
+            x:Name="GamePanel"
+            IsVisible="False">
+
+            <!-- Vulkan rendering surface -->
+
+            <engine:VulkanGameView
+                x:Name="VulkanSurface"/>
+
+            <!-- HUD -->
+
+            <Grid
+                Padding="15"
+                RowDefinitions="Auto,*,Auto">
+
+                <!-- TOP HUD -->
+
+                <Grid
+                    Grid.Row="0"
+                    ColumnDefinitions="*,Auto,*"
+                    ColumnSpacing="12">
+
+                    <VerticalStackLayout
+                        Grid.Column="0"
+                        Spacing="3">
+
+                        <Label
+                            x:Name="LevelTitleLabel"
+                            Text="0-1 SACRED KNIGHT"
+                            TextColor="White"
+                            FontAttributes="Bold"
+                            FontSize="18"/>
+
+                        <Label
+                            x:Name="EnemyLabel"
+                            Text="SACRED SENTINEL"
+                            TextColor="#D64A52"
+                            FontSize="12"/>
+
+                        <ProgressBar
+                            x:Name="EnemyHealthBar"
+                            Progress="1"
+                            ProgressColor="#B51F2B"
+                            BackgroundColor="#383838"/>
+
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout
+                        Grid.Column="1"
+                        WidthRequest="145"
+                        Spacing="4">
+
+                        <Label
+                            Text="HEALTH"
+                            TextColor="#E8E8E8"
+                            FontAttributes="Bold"
+                            HorizontalOptions="Center"/>
+
+                        <Label
+                            x:Name="HealthLabel"
+                            Text="100 / 100"
+                            TextColor="White"
+                            HorizontalOptions="Center"/>
+
+                        <ProgressBar
+                            x:Name="HealthBar"
+                            Progress="1"
+                            ProgressColor="#D42C3A"
+                            BackgroundColor="#383838"/>
+
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout
+                        Grid.Column="2"
+                        WidthRequest="150"
+                        Spacing="4">
+
+                        <Label
+                            Text="STYLE"
+                            TextColor="#E8E8E8"
+                            HorizontalOptions="Center"
+                            FontAttributes="Bold"/>
+
+                        <Label
+                            x:Name="StyleLabel"
+                            Text="DESTRUCTIVE"
+                            TextColor="#E13C47"
+                            FontSize="14"
+                            HorizontalOptions="Center"/>
+
+                        <ProgressBar
+                            x:Name="StyleBar"
+                            Progress="0"
+                            ProgressColor="#E13C47"
+                            BackgroundColor="#383838"/>
+
+                    </VerticalStackLayout>
+
+                </Grid>
+
+
+                <!-- GAMEPLAY CONTROLS -->
+
+                <Grid
+                    Grid.Row="1"
+                    ColumnDefinitions="1.1*,1.4*,1.1*"
+                    ColumnSpacing="10">
+
+                    <!-- MOVEMENT -->
+
+                    <Border
+                        Grid.Column="0"
+                        Background="#33111117"
+                        Stroke="#858585"
+                        StrokeThickness="1"
+                        VerticalOptions="Center"
+                        HeightRequest="125"
+                        WidthRequest="125"
+                        HorizontalOptions="Start">
+
+                        <Border.GestureRecognizers>
+                            <PanGestureRecognizer
+                                PanUpdated="OnMovePanUpdated"/>
+                        </Border.GestureRecognizers>
+
+                        <Label
+                            Text="MOVE"
+                            TextColor="White"
+                            FontAttributes="Bold"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center"/>
+
+                    </Border>
+
+
+                    <!-- CAMERA -->
+
+                    <Border
+                        Grid.Column="1"
+                        Background="#11000000"
+                        Stroke="#444444"
+                        StrokeThickness="1">
+
+                        <Border.GestureRecognizers>
+                            <PanGestureRecognizer
+                                PanUpdated="OnLookPanUpdated"/>
+                        </Border.GestureRecognizers>
+
+                        <Label
+                            Text="+"
+                            TextColor="#CCFFFFFF"
+                            FontSize="30"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center"/>
+
+                    </Border>
+
+
+                    <!-- ACTIONS -->
+
+                    <VerticalStackLayout
+                        Grid.Column="2"
+                        VerticalOptions="Center"
+                        Spacing="9">
+
+                        <Button
+                            Text="JUMP"
+                            Clicked="OnJump"
+                            BackgroundColor="#37373D"
+                            TextColor="White"/>
+
+                        <Button
+                            Text="PARRY"
+                            Clicked="OnParry"
+                            BackgroundColor="#73431A"
+                            TextColor="White"/>
+
+                        <Button
+                            Text="DASH"
+                            Clicked="OnDash"
+                            BackgroundColor="#38384C"
+                            TextColor="White"/>
+
+                    </VerticalStackLayout>
+
+                </Grid>
+
+
+                <!-- BOTTOM HUD -->
+
+                <Grid
+                    Grid.Row="2"
+                    RowDefinitions="Auto,Auto"
+                    ColumnDefinitions="*,Auto"
+                    RowSpacing="7">
+
+                    <VerticalStackLayout
+                        Grid.Row="0"
+                        Grid.Column="0">
+
+                        <Label
+                            x:Name="KatanaLabel"
+                            Text="STANDARD KATANA"
+                            TextColor="#FFFFFF"
+                            FontAttributes="Bold"
+                            FontSize="16"/>
+
+                        <Label
+                            x:Name="CombatLogLabel"
+                            Text="THE HELL AWAITS."
+                            TextColor="#D04A54"
+                            FontSize="12"/>
+
+                    </VerticalStackLayout>
+
+                    <Button
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Text="VARIANT"
+                        Clicked="OnChangeVariant"
+                        BackgroundColor="#50212A"
+                        TextColor="White"/>
+
+                    <HorizontalStackLayout
+                        Grid.Row="1"
+                        Grid.ColumnSpan="2"
+                        Spacing="10">
+
+                        <Button
+                            Text="SLASH"
+                            Clicked="OnAttack"
+                            BackgroundColor="#A32030"
+                            TextColor="White"
+                            HorizontalOptions="FillAndExpand"/>
+
+                        <Button
+                            Text="HEAVY"
+                            Clicked="OnHeavyAttack"
+                            BackgroundColor="#64202B"
+                            TextColor="White"
+                            HorizontalOptions="FillAndExpand"/>
+
+                        <Button
+                            Text="MENU"
+                            Clicked="OnMenu"
+                            BackgroundColor="#33333A"
+                            TextColor="White"
+                            HorizontalOptions="FillAndExpand"/>
+
+                    </HorizontalStackLayout>
+
+                </Grid>
+
+            </Grid>
+
+            <Label
+                x:Name="VulkanStatusLabel"
+                Text="WAITING FOR VULKAN"
+                TextColor="#B0B0B0"
+                FontSize="9"
+                HorizontalOptions="End"
+                VerticalOptions="End"
+                Margin="8"/>
+
+        </Grid>
+
+    </Grid>
+
 </ContentPage>
