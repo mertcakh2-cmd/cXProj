@@ -38,9 +38,7 @@ public sealed class GameSession
 
         bool killed = Enemy.TakeDamage(damage);
 
-        Player.Heal(
-            Katana.BloodHealing(heavy)
-        );
+        Player.Heal(Katana.BloodHealing(heavy));
 
         Style.AddPoints(heavy ? 110 : 55);
 
@@ -55,7 +53,6 @@ public sealed class GameSession
     public string Parry()
     {
         Style.AddPoints(110);
-
         Player.Heal(2);
 
         return "PARRY! +110 STYLE";
@@ -64,7 +61,6 @@ public sealed class GameSession
     public string Dash()
     {
         Motor.Dash();
-
         Style.AddPoints(30);
 
         return "DASH!";
