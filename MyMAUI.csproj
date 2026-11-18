@@ -1,41 +1,27 @@
-<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">  <PropertyGroup>
+    <TargetFramework>net10.0-android</TargetFramework>
+    <OutputType>Exe</OutputType><RootNamespace>MyMAUI</RootNamespace>
+<UseMaui>true</UseMaui>
+<SingleProject>true</SingleProject>
 
-  <PropertyGroup>
-    <TargetFrameworks>net10.0-android</TargetFrameworks>
+<ImplicitUsings>enable</ImplicitUsings>
+<Nullable>enable</Nullable>
+<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 
-    <OutputType>Exe</OutputType>
+<ApplicationTitle>ULTRAKILL Mobile</ApplicationTitle>
+<ApplicationId>com.example.ultrakillmobile</ApplicationId>
+<ApplicationDisplayVersion>0.1</ApplicationDisplayVersion>
+<ApplicationVersion>1</ApplicationVersion>
 
-    <RootNamespace>MyMAUI</RootNamespace>
+<SupportedOSPlatformVersion>24.0</SupportedOSPlatformVersion>
 
-    <UseMaui>true</UseMaui>
+<RuntimeIdentifiers>android-arm64</RuntimeIdentifiers>
+<AndroidPackageFormat>apk</AndroidPackageFormat>
 
-    <SingleProject>true</SingleProject>
+<AndroidUseAapt2>true</AndroidUseAapt2>
+<AndroidCreatePackagePerAbi>false</AndroidCreatePackagePerAbi>
 
-    <ImplicitUsings>enable</ImplicitUsings>
-
-    <Nullable>enable</Nullable>
-
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-
-    <ApplicationTitle>ULTRAKILL Mobile</ApplicationTitle>
-
-    <ApplicationId>com.example.ultrakillmobile</ApplicationId>
-
-    <ApplicationDisplayVersion>0.1.0</ApplicationDisplayVersion>
-
-    <ApplicationVersion>1</ApplicationVersion>
-
-    <SupportedOSPlatformVersion>24.0</SupportedOSPlatformVersion>
-
-    <AndroidPackageFormat>apk</AndroidPackageFormat>
-
-    <AndroidSupportedAbis>arm64-v8a</AndroidSupportedAbis>
-  </PropertyGroup>
-
-  <ItemGroup>
+  </PropertyGroup>  <ItemGroup>
+    <PackageReference Include="Microsoft.Maui.Controls" Version="10.0.110" />
     <PackageReference Include="Silk.NET.Vulkan" Version="2.23.0" />
-
-    <PackageReference Include="Silk.NET.Vulkan.Extensions.ANDROID" Version="2.23.0" />
-  </ItemGroup>
-
-</Project>
+  </ItemGroup></Project>
