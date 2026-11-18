@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="MyMAUI.MainPage"
+    BackgroundColor="#101114">
+
+    <VerticalStackLayout
+        Padding="30"
+        Spacing="20"
+        VerticalOptions="Center">
+
+        <Label
+            Text="MY MAUI"
+            FontSize="36"
+            FontAttributes="Bold"
+            TextColor="White"
+            HorizontalOptions="Center"/>
+
+        <Label
+            Text="Your first C# Android application"
+            TextColor="#AAAAAA"
+            HorizontalOptions="Center"/>
+
+        <Button
+            Text="Hello Android"
+            BackgroundColor="#6750A4"
+            TextColor="White"
+            CornerRadius="16"
+            Clicked="OnButtonClicked"/>
+
+    </VerticalStackLayout>
+</ContentPage>
