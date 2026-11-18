@@ -1,24 +1,41 @@
-<Project Sdk="Microsoft.NET.Sdk">  <PropertyGroup>
-    <TargetFrameworks>net10.0-android</TargetFrameworks><OutputType>Exe</OutputType>
+<Project Sdk="Microsoft.NET.Sdk">
 
-<RootNamespace>MyMAUI</RootNamespace>
+  <PropertyGroup>
+    <TargetFrameworks>net10.0-android</TargetFrameworks>
 
-<UseMaui>true</UseMaui>
+    <OutputType>Exe</OutputType>
 
-<SingleProject>true</SingleProject>
+    <RootNamespace>MyMAUI</RootNamespace>
 
-<ImplicitUsings>enable</ImplicitUsings>
+    <UseMaui>true</UseMaui>
 
-<Nullable>enable</Nullable>
+    <SingleProject>true</SingleProject>
 
-<ApplicationTitle>My MAUI App</ApplicationTitle>
+    <ImplicitUsings>enable</ImplicitUsings>
 
-<ApplicationId>com.example.mymaui</ApplicationId>
+    <Nullable>enable</Nullable>
 
-<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 
-<ApplicationVersion>1</ApplicationVersion>
+    <ApplicationTitle>ULTRAKILL Mobile</ApplicationTitle>
 
-<SupportedOSPlatformVersion>23.0</SupportedOSPlatformVersion>
+    <ApplicationId>com.example.ultrakillmobile</ApplicationId>
 
-  </PropertyGroup></Project>
+    <ApplicationDisplayVersion>0.1.0</ApplicationDisplayVersion>
+
+    <ApplicationVersion>1</ApplicationVersion>
+
+    <SupportedOSPlatformVersion>24.0</SupportedOSPlatformVersion>
+
+    <AndroidPackageFormat>apk</AndroidPackageFormat>
+
+    <AndroidSupportedAbis>arm64-v8a</AndroidSupportedAbis>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Silk.NET.Vulkan" Version="2.23.0" />
+
+    <PackageReference Include="Silk.NET.Vulkan.Extensions.ANDROID" Version="2.23.0" />
+  </ItemGroup>
+
+</Project>
