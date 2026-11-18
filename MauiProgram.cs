@@ -1,8 +1,9 @@
-using Microsoft.Maui;
-using Microsoft.Maui.Hosting;
-
+using Microsoft.Extensions.Logging;
 using MyMAUI.Engine.Views;
+
+#if ANDROID
 using MyMAUI.Platforms.Android;
+#endif
 
 namespace MyMAUI;
 
@@ -12,14 +13,21 @@ public static class MauiProgram
     {
         var builder = MauiApp.CreateBuilder();
 
-        builder.UseMauiApp<App>();
+        builder
+            .UseMauiApp<App>();
 
+#if ANDROID
         builder.ConfigureMauiHandlers(handlers =>
         {
             handlers.AddHandler<
                 VulkanGameView,
                 VulkanGameViewHandler>();
         });
+#endif
+
+#if DEBUG
+        builder.Logging.AddDebug();
+#endif
 
         return builder.Build();
     }
