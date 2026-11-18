@@ -1,110 +1,72 @@
-using System.Runtime.InteropServices;
-
 using Silk.NET.Vulkan;
 
 namespace MyMAUI.Platforms.Android;
 
-internal static unsafe class VulkanBootstrap
+public static unsafe class VulkanBootstrap
 {
     private static Vk? _vk;
-
     private static Instance _instance;
 
-    private static bool _ready;
+    public static bool IsInitialized { get; private set; }
 
-    private static readonly object Gate = new();
+    public static string Status { get; private set; } =
+        "Vulkan not initialized";
 
-    public static string Initialize()
+    public static bool Initialize()
     {
-        lock (Gate)
+        try
         {
-            if (_ready)
-                return "VULKAN INSTANCE READY";
+            _vk = Vk.GetApi();
 
-            IntPtr appName =
-                Marshal.StringToHGlobalAnsi("ULTRAKILL Mobile");
-
-            IntPtr engineName =
-                Marshal.StringToHGlobalAnsi("BloodEngine");
-
-            try
+            ApplicationInfo appInfo = new()
             {
-                _vk = Vk.GetApi();
+                SType = StructureType.ApplicationInfo,
+                PApplicationName = (byte*)0,
+                ApplicationVersion = 1,
+                PEngineName = (byte*)0,
+                EngineVersion = 1,
+                ApiVersion = Vk.Version10
+            };
 
-                ApplicationInfo appInfo = new()
-                {
-                    SType = StructureType.ApplicationInfo,
-
-                    PApplicationName = (byte*)appName,
-
-                    ApplicationVersion = new Version32(1, 0, 0),
-
-                    PEngineName = (byte*)engineName,
-
-                    EngineVersion = new Version32(0, 1, 0),
-
-                    ApiVersion = Vk.Version10
-                };
-
-                InstanceCreateInfo createInfo = new()
-                {
-                    SType = StructureType.InstanceCreateInfo,
-
-                    PApplicationInfo = &appInfo
-                };
-
-                Result result = _vk.CreateInstance(
-                    &createInfo,
-                    null,
-                    out _instance
-                );
-
-                if (result != Result.Success)
-                {
-                    _vk.Dispose();
-                    _vk = null;
-
-                    return $"VULKAN ERROR: {result}";
-                }
-
-                _ready = true;
-
-                return "VULKAN INSTANCE READY | VERSION 1.0";
-            }
-            catch (Exception ex)
+            InstanceCreateInfo createInfo = new()
             {
-                _vk?.Dispose();
+                SType = StructureType.InstanceCreateInfo,
+                PApplicationInfo = &appInfo
+            };
 
-                _vk = null;
+            Result result = _vk.CreateInstance(
+                &createInfo,
+                null,
+                out _instance
+            );
 
-                return "VULKAN FAILED: " + ex.Message;
-            }
-            finally
+            if (result != Result.Success)
             {
-                Marshal.FreeHGlobal(appName);
-
-                Marshal.FreeHGlobal(engineName);
+                Status = $"Vulkan failed: {result}";
+                return false;
             }
+
+            IsInitialized = true;
+            Status = "Vulkan instance created";
+
+            return true;
+        }
+        catch (Exception ex)
+        {
+            Status = ex.Message;
+            return false;
         }
     }
 
     public static void Shutdown()
     {
-        lock (Gate)
+        if (_vk != null && IsInitialized)
         {
-            if (_vk == null)
-                return;
-
-            if (_ready)
-            {
-                _vk.DestroyInstance(_instance, null);
-
-                _ready = false;
-            }
-
-            _vk.Dispose();
-
-            _vk = null;
+            _vk.DestroyInstance(_instance, null);
+            IsInitialized = false;
         }
+
+        _vk?.Dispose();
+        _vk = null;
     }
 }
