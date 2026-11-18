@@ -1,0 +1,55 @@
+name: ULTRAKILL Mobile Android Build
+
+on:
+  workflow_dispatch:
+
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Setup .NET 10
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Install MAUI Android workload
+        run: dotnet workload install maui-android
+
+      - name: Restore dependencies
+        run: dotnet restore MyMAUI.csproj
+
+      - name: Build Android APK
+        run: |
+          dotnet publish MyMAUI.csproj \
+            --configuration Release \
+            --framework net10.0-android \
+            -p:AndroidPackageFormat=apk \
+            -p:AndroidSupportedAbis=arm64-v8a \
+            --output ./artifacts
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: ULTRAKILL-Mobile-BETA
+          path: artifacts/*.apk
+          if-no-files-found: error
